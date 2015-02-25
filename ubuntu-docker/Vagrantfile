@@ -13,6 +13,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     sudo locale-gen ja_JP.UTF-8
     sudo apt-get update
-    sudo apt-get install -y docker
+    sudo apt-get install -y docker.io
+    sudo gpasswd -a vagrant docker
+    sudo service docker.io restart
   SHELL
 end
