@@ -8,17 +8,13 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu14.04"
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
-  config.vm.hostname = "#{config.vm.box}-node-#{Time.now.to_i}"
+  config.vm.hostname = "#{config.vm.box}-ruby2-#{Time.now.to_i}"
 
   config.vm.provision "shell", inline: <<-SHELL
     sudo locale-gen ja_JP.UTF-8
     sudo apt-get update
-    sudo apt-get install -y nodejs
-    sudo apt-get install git npm -y
-    git clone https://github.com/rynclark/flux-getting-started.git
-    sudo npm install -g bower gulp
-    cd flux-getting-started/
-    npm install && bower install
-    npm install lodash lodash._basecopy lodash._basetostring lodash._basevalues lodash._isiterateecall lodash.escape lodash.isnative lodash.keys lodash.restparam lodash.templatesettings gulp-ruby-sass styles
+    sudo add-apt-repository -y ppa:brightbox/ruby-ng
+    sudo apt-get update -y
+    sudo apt-get install ruby2.2 -y
   SHELL
 end
