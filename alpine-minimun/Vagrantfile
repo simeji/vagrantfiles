@@ -48,7 +48,10 @@ Vagrant.configure(2) do |config|
       nginx-#{NGINX_VERSION}.tar.gz \
       /var/cache/apk/*
 
+    cd ~/
+    openssl dhparam -out dhparam.pem 2048 >& /tmp/dh.log
+    sudo mv dhparam.pem /etc/nginx/
     sudo mv /tmp/nginx.conf /etc/nginx/conf/nginx.conf
-    sudo /usr/local/sbin/nginx -t  && sudo /usr/local/sbin/nginx -t 
+    sudo /usr/local/sbin/nginx -t  && sudo /usr/local/sbin/nginx
   SHELL
 end
