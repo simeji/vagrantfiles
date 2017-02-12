@@ -6,15 +6,18 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu14.04"
-  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box = "ubuntu17.04"
+  config.vm.box_url = "https://cloud-images.ubuntu.com/zesty/current/zesty-server-cloudimg-amd64-vagrant.box"
   config.vm.hostname = "#{config.vm.box}-node-#{Time.now.to_i}"
 
   config.vm.provision "shell", inline: <<-SHELL
     sudo locale-gen ja_JP.UTF-8
     sudo apt-get update
-    sudo apt-get install -y nodejs
-    sudo apt-get install git npm -y
+    sudo npm install -g n
+    sudo n install latest
+    sudo ln -s `n bin` /usr/bin/node
+    curl -0 -L https://npmjs.org/install.sh | sudo sh
+    sudo npm install -g yo generator-hubot
     git clone https://github.com/rynclark/flux-getting-started.git
     sudo npm install -g bower gulp
     cd flux-getting-started/
